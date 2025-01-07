@@ -1,0 +1,25 @@
+import cv2
+from google.colab.patches import cv2_imshow
+import numpy as np
+#change the image location
+image = cv2.imread("/18xc1csfc.png")
+#cv2_imshow(image)
+
+gray = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
+canny_image = cv2.Canny(gray,150,200)
+#cv2_imshow(canny_image)
+
+#Erosion and Dilation
+kernal = np.ones((5,5), np.uint8)
+
+#Dilation
+dilate_image = cv2.dilate(canny_image, kernal, iterations=1)
+#cv2_imshow(dilate_image)
+
+#Erosion
+#cv2_imshow (dilate_image)
+erode_image = cv2.erode(dilate_image, kernal, iterations=1)
+#cv2_imshow(erode_image)
+
+display = np.hstack((gray, canny_image, dilate_image, erode_image))
+cv2_imshow(display)
